@@ -35,7 +35,7 @@ const player2=createPlayer(`shagun`,`o`)
 
 function gameController(player1,player2,currentPlayer){
 
-    const board=gameboard.getBoard();
+    let board=gameboard.getBoard();
     let gameOver=false;
 
 
@@ -49,6 +49,22 @@ function gameController(player1,player2,currentPlayer){
                             [2,4,6]
                         ]
 
+    function tieDetection(){
+        if(!checkWinner() && !(board.includes(`_`))){
+            return true;
+        }
+        return false;
+    }
+
+     function resetGame(){
+        currentPlayer=player1;
+        gameOver=false;
+        gameboard.reset();
+        console.error(`Resettting Game`);
+        
+        board=gameboard.getBoard()
+    }
+
 
     function checkWinner(){
         for (let i in winningPatterns){
@@ -57,10 +73,10 @@ function gameController(player1,player2,currentPlayer){
             const b=currentPattern[1];
             const c=currentPattern[2];
              if (board[a]!=`_` && board[a]===board[b] && board[b]===board[c]){
-            return `winner found: ${currentPlayer.playerName}`;
+            return currentPlayer;
             }
         }
-        return;
+        return false;
         
     }
 
@@ -68,7 +84,8 @@ function gameController(player1,player2,currentPlayer){
     function playRound(position){
 
         if (gameOver){
-            console.error(`game over`);
+            console.log(`game over`);
+            resetGame();
             return ;
         }
 
@@ -79,11 +96,18 @@ function gameController(player1,player2,currentPlayer){
         console.log(`The current Player is : `,currentPlayer.playerName);
         gameboard.placeMarker(position,currentPlayer.marker);
         const winner=checkWinner();
+        const tie=tieDetection();
+        if (tie){
+            console.log(`its a tie babe`);
+            gameOver=true;
+            return;
+            
+        }
         if (winner){
             console.log(gameboard.getBoard());
-            console.log(winner);
-            gameOver=true
-            return  
+            console.log(`The winner is ${winner.playerName}`);
+            gameOver=true;
+            return;
         }
         if (currentPlayer===player1){
         currentPlayer=player2
@@ -110,11 +134,12 @@ const game=gameController(player1,player2,player1);
 
 
 game.playRound(0);
-game.playRound(3);
+game.playRound(7);
 game.playRound(1);
-game.playRound(4);
+game.playRound(3);
 game.playRound(2);
-game.playRound(8);
+game.playRound(4);
+
 
 
 
