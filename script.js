@@ -31,7 +31,7 @@ function createPlayer(playerName,marker){
 }
 
 const player1=createPlayer(`vishii`,`x`);
-const player2=createPlayer(`shagun`,`o`)
+const player2=createPlayer(`chikipiki`,`o`)
 
 function gameController(player1,player2,currentPlayer){
 
