@@ -1,0 +1,9 @@
+.board{
+    display: grid;
+    grid-template:1fr 1fr 1fr/1fr 1fr 1fr;
+    min-width: 300px;
+    min-height: 300px;
+}
+.cell{
+    border: 1px solid black;
+}
